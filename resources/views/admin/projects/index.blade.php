@@ -9,6 +9,7 @@
                     <th scope="col">Title</th>
                     <th scope="col">Description</th>
                     <th scope="col">Slug</th>
+                    <th scope="col">Buttons</th>
                 </tr>
             </thead>
             <tbody>
@@ -18,6 +19,12 @@
                     <td>{{ $item->title }}</td>
                     <td>{{ $item->description }}</td>
                     <td>{{ $item->slug }}</td>
+                    <td>
+                        <a  class="btn btn-primary" href="{{ route("admin.projects.show", ["project" => $item->slug ])}}">Dettagli</a>
+                    </td>
+                    <td>
+                        <a  class="btn btn-primary" href="{{ route("admin.projects.edit", ["project" => $item->slug ])}}">Modifica</a>
+                    </td>
                 </tr>
                 @endforeach
             </tbody>
