@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Project;
+use Illuminate\Support\Str;
 
 class ProjectController extends Controller
 {
@@ -15,7 +16,6 @@ class ProjectController extends Controller
     {
 
         $projects = Project::all();
-
         return view("admin.projects.index", compact('projects'));
     }
 
@@ -32,32 +32,53 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+
+        $newProject = new Project();
+        $newProject->title = $data["title"];
+        $newProject->description = $data["description"];
+        $newProject->slug = Str::slug($newProject->title);
+        $newProject->save();
+        return redirect()->route("admin.projects.index");
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Project $project)
+
+        public function show(Project $project)
     {
         return view("admin.projects.show", compact("project"));
     }
+    
+    /**
+     * Display the specified resource.
+     */
+    // public function show(string $slug)
+    // {
+    //     $project = Project::where('slug', $slug)->first();
+    //     if(!$project) {
+    //         abort(404);
+    //     }
+    //     return view('admin.projects.show', compact('project'));
+    // }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit()
+    public function edit(Project $project)
     {
-        $projects = Project::all();
-        return view("admin.projects.edit");
+        
+        return view("admin.projects.edit", compact("project"));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Project $project)
     {
-        //
+        $project->title = $request->title;
+        $project->description =$request->description;
+        $project->slug = Str::slug($project->title);
+        $project->save();
+        return view('admin.projects.show', compact('project'));
     }
 
     /**

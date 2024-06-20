@@ -20,7 +20,7 @@
                     <td>{{ $item->description }}</td>
                     <td>{{ $item->slug }}</td>
                     <td>
-                        <a  class="btn btn-primary" href="{{ route("admin.projects.show", ["project" => $item->slug ])}}">Dettagli</a>
+                        <a class="btn btn-info" href="{{ route('admin.projects.show', ['project' =>$item->slug]) }}"><i class="fa-solid fa-plus"></i></a>
                     </td>
                     <td>
                         <a  class="btn btn-primary" href="{{ route("admin.projects.edit", ["project" => $item->slug ])}}">Modifica</a>
